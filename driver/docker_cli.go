@@ -215,7 +215,7 @@ func (d *DockerCLIDriver) Run(ctx context.Context, ctr Container) (string, time.
 
 // Stop will stop/kill a container
 func (d *DockerCLIDriver) Stop(ctx context.Context, ctr Container) (string, time.Duration, error) {
-	return utils.ExecTimedCmd(ctx, d.dockerBinary, "kill "+ctr.Name())
+	return utils.ExecTimedCmd(ctx, d.dockerBinary, "stop "+ctr.Name())
 }
 
 // Remove will remove a container

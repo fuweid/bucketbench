@@ -28,6 +28,8 @@ const (
 	Ctr
 	// CRI driver represents k8s Container Runtime Interface
 	CRI
+	// PouchCLI represents the Pouch CLI driver implementation
+	PouchCLI
 	// Null driver represents an empty driver for use by benchmarks that
 	// require no driver
 	Null
@@ -125,7 +127,7 @@ func New(ctx context.Context, config *Config) (Driver, error) {
 	switch config.DriverType {
 	case Runc:
 		return NewRuncDriver(config.Path)
-	case DockerCLI:
+	case DockerCLI, PouchCLI:
 		return NewDockerCLIDriver(ctx, config)
 	case Docker:
 		return NewDockerDriver(ctx, config)
@@ -157,6 +159,8 @@ func (driverType Type) String() string {
 		return "Runc"
 	case CRI:
 		return "CRI"
+	case PouchCLI:
+		return "PouchCLI"
 	default:
 		return "(unknown)"
 	}
@@ -178,6 +182,8 @@ func StringToType(dtype string) Type {
 		driverType = Runc
 	case "CRI":
 		driverType = CRI
+	case "PouchCLI":
+		driverType = PouchCLI
 	default:
 		driverType = Null
 	}
